@@ -31,18 +31,6 @@ const userDataSchema = new Schema({
   },
 });
 
-userDataSchema.methods.generateVerificationToken = () => {
-  const user = this;
-
-  const emailVerificationToken = jwt.sign(
-    { userId: user._id },
-    process.env.EMAIL_VERIFICATION_TOKEN,
-    { expiresIn: "3d" }
-  );
-
-  return emailVerificationToken;
-};
-
 const userDataModel = model("userData", userDataSchema);
 
 module.exports = userDataModel;
