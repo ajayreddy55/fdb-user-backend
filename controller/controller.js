@@ -41,7 +41,14 @@ const sendEmailToVerify = (mailContent, email, name, mailSubject) => {
     html: mailContent,
   };
 
-  const messageRes = transporter.sendMail(message);
+  const messageRes = transporter
+    .sendMail(message)
+    .then((msg) => {
+      console.log(msg);
+    })
+    .catch((error) => {
+      console.log(error.message);
+    });
   return;
 };
 
@@ -108,7 +115,7 @@ exports.signup = async (request, response) => {
     }
   } catch (error) {
     console.log(error.message);
-    return response.status(500).json({ message: error.message });
+    return response.status(500).json({ message: "Internal Server Error" });
   }
 };
 
@@ -167,6 +174,6 @@ exports.userSignupMailVerify = async (request, response) => {
     }
   } catch (error) {
     console.log(error.message);
-    return response.status(500).json({ message: error.message });
+    return response.status(500).json({ message: "Internal Server Error" });
   }
 };
